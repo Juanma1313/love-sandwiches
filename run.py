@@ -131,7 +131,19 @@ def main():
     sales_columns = get_last_5_entries_sales()
     stock_data = calculate_stock_data(sales_columns)
     update_worksheet(stock_data, "stock")
+    return stock_data
 
+if __name__ == "__main__":
 
-print("Welcome to Love Sandwiches Data Automation")
-main()
+    print("Welcome to Love Sandwiches Data Automation")
+    stock_data=main()
+
+    def get_stock_values(data):
+        # Reads the first row from the "stock" worksheet
+        #headings=SHEET.worksheet("stock").get_values("1:1")
+        headings=SHEET.worksheet("stock").row_values(1)
+        # returns a created dictionary interlacing read headers and stock_data values
+        return dict([(header,value) for header, value in zip(headings, data)])
+
+    stock_values=get_stock_values(stock_data)
+    print(stock_values)
